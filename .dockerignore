@@ -1,0 +1,17 @@
+Dockerfile
+.dockerignore
+**/.git
+**/.gitignore
+**/.vscode
+**/target
+**/Cargo.lock
+
+
+data/large_bayes_nets/*.lisp
+data/large_bayes_nets/*.jl.ignore
+.vscode/
+out/
+build.log
+PluckSynthesis.jl/out
+Pluck.jl/out
+
