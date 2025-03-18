@@ -7,11 +7,12 @@ Dockerfile
 **/Cargo.lock
 
 
-data/large_bayes_nets/*.lisp
-data/large_bayes_nets/*.jl.ignore
-.vscode/
-out/
+**/large_bayes_nets/*.lisp
+**/large_bayes_nets/*.jl.ignore
 build.log
-PluckSynthesis.jl/out
-Pluck.jl/out
+
+PluckArtifact.jl/out
+PluckArtifact.jl/Pluck.jl/out
+PluckArtifact-synthesis/PluckSynthesis.jl/out
+PluckArtifact-synthesis/out
 
