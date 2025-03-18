@@ -1,11 +1,7 @@
 Dockerfile
 .dockerignore
-**/.git
-**/.gitignore
-**/.vscode
 **/target
 **/Cargo.lock
-
 
 **/large_bayes_nets/*.lisp
 **/large_bayes_nets/*.jl.ignore
@@ -15,4 +11,3 @@ PluckArtifact.jl/out
 PluckArtifact.jl/Pluck.jl/out
 PluckArtifact-synthesis/PluckSynthesis.jl/out
 PluckArtifact-synthesis/out
-

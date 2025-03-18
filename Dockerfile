@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 USER root
-WORKDIR /PluckArtifact.jl
-COPY . /PluckArtifact.jl
+WORKDIR /pluck-artifact
+COPY . /pluck-artifact
 
 
 # Install Rust
