@@ -1,8 +1,0 @@
-[submodule "PluckArtifact.jl"]
-	path = PluckArtifact.jl
-	url = https://github.com/mlb2251/PluckArtifact.jl
-	branch = main
-[submodule "PluckArtifact-synthesis"]
-	path = PluckArtifact-synthesis
-	url = https://github.com/mlb2251/PluckArtifact.jl
-	branch = synthesis
