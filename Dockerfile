@@ -21,15 +21,11 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 # Install Python3
 RUN apt-get update && apt-get install -y python3 python3-pip python3-sympy
 
-
 # Build rust library
 RUN make bindings
 
 # Install Julia dependencies
-RUN julia --project -e 'using Pkg; Pkg.instantiate()'
+RUN make julia-instantiate
 
 # Set default entrypoint to bash
 ENTRYPOINT ["/bin/bash"]
-
-
-
