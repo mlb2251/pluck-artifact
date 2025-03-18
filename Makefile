@@ -11,3 +11,16 @@ julia-instantiate:
 
 docker-build:
 	docker build -t pluck-artifact:latest .
+
+submodule-status:
+	git submodule status
+	git submodule foreach --recursive 'git submodule status'
+
+
+submodule-update:
+	cd PluckArtifact.jl && git checkout main && git pull
+	cd PluckArtifact-synthesis && git checkout synthesis && git pull
+	cd PluckArtifact.jl/Pluck.jl && git checkout main-maddy && git pull
+	cd PluckArtifact-synthesis/PluckSynthesis.jl && git checkout dots && git pull
+	cd PluckArtifact.jl/Pluck.jl/src/RSDD/rsdd && git checkout main && git pull
+	cd PluckArtifact-synthesis/PluckSynthesis.jl/src/RSDD/rsdd && git checkout main && git pull
