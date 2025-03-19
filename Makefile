@@ -16,8 +16,12 @@ PLUCK_MAIN_MADDY_BRANCH = main-maddy
 PLUCK_DOTS_BRANCH = dots
 RSDD_MAIN_BRANCH = main
 
+# START THE DOCKER CONTAINER
+
 docker-start:
 	docker run -it -m $(DOCKER_MEMORY) -p $(DOCKER_PORT):$(DOCKER_PORT) -v $(PWD):/pluck-artifact $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+
+# BASICS
 
 setup: bindings julia-instantiate
 
@@ -29,17 +33,20 @@ julia-instantiate:
 	cd PluckArtifact.jl && make julia-instantiate
 	cd PluckArtifact-synthesis && make julia-instantiate
 
+# DOCKER BUILD
+
 docker-build:
 	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
 
 docker-build-verbose:
 	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) . --progress=plain
 
+# SUBMODULES (for development, not for artifact usage)
+
 submodule-status:
 	git submodule status
 	git submodule foreach --recursive 'git submodule status'
 
-# useful for having them not lose their branches
 submodule-clone:
 	git clone $(PLUCK_REPO) -b $(PLUCK_MAIN_BRANCH)
 	git clone $(PLUCK_REPO) -b $(PLUCK_SYNTHESIS_BRANCH) PluckArtifact-synthesis
@@ -55,5 +62,4 @@ submodule-checkout:
 	cd PluckArtifact-synthesis/PluckSynthesis.jl && git checkout $(PLUCK_DOTS_BRANCH) && git pull
 	cd PluckArtifact.jl/Pluck.jl/src/RSDD/rsdd && git checkout $(RSDD_MAIN_BRANCH) && git pull
 	cd PluckArtifact-synthesis/PluckSynthesis.jl/src/RSDD/rsdd && git checkout $(RSDD_MAIN_BRANCH) && git pull
-
 
