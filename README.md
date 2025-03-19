@@ -35,7 +35,7 @@ make docker-start
 ```
 or by running:
 ```
-docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact pluck-artifact:latest
+docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact mlbowers/pluck-artifact:latest
 ```
 The flag `-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in python3 HTTP server. The 60GB limit is unnecessary, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
 

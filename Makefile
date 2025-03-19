@@ -1,5 +1,5 @@
 # Docker configuration
-DOCKER_IMAGE_NAME = pluck-artifact
+DOCKER_IMAGE_NAME = mlbowers/pluck-artifact
 DOCKER_TAG = latest
 DOCKER_PORT = 8000
 DOCKER_MEMORY = 60g
