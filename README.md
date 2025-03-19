@@ -1,10 +1,18 @@
 Thank you for taking the time to evaluate this artifact. This artifact is for reproducing the results of the paper "Stochastic Lazy Knowledge Compilation for Inference in Discrete Probabilistic Programs" (PLDI 2025 Submission #545).
 
-# Kick the tires
+# Kicking the tires
 
-## Basic setup
+## Getting the artifact
 
-If starting from the Zenodo zip file, you can download and unzip `pluck-artifact.zip` to make a new folder `pluck-artifact`. If starting from here, we recommend updating to any recent tweaks/improvements in the repo (including to the ReadMe):
+### From GitHub
+
+```
+git clone --recursive https://github.com/mlb2251/pluck-artifact.git
+```
+
+### From Zenodo
+
+Download and unzip `pluck-artifact.zip` to make a new folder `pluck-artifact`. While the bulk of the will remain fixed, we recommend updating to any recent tweaks/improvements in the repo, including to the ReadMe:
 
 ```
 cd pluck-artifact
@@ -12,11 +20,7 @@ git pull
 git submodule update --init --recursive
 ```
 
-Without using the zip file, you can also just clone `pluck-artifact` via:
-
-```
-git clone --recursive https://github.com/mlb2251/pluck-artifact.git
-```
+## Docker setup
 
 The artifact is set up to run in Docker - you can pull the docker container like so:
 
@@ -33,19 +37,19 @@ or by running:
 ```
 	docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact pluck-artifact:latest
 ```
-`-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in python3 HTTP server. The 60GB limit is unnecessary, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). The high-memory baselines can be avoided as needed.
+`-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in python3 HTTP server. The 60GB limit is unnecessary, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
 
 **All commands after this point should be run within Docker unless otherwise specified**
 
-## Setup
+## Compilation
 
-Run the following command to make sure the Rust binaries are compiled, and that the Julia libraries are instantiated.
+Run the following command from the root of the repo to make sure the Rust binaries are compiled, and that the Julia libraries are instantiated.
 ```
 make setup
 ```
 
 ## Check that PluckArtifact.jl precompiles successfully
-From the root:
+From the root of the repo, run:
 ```
 cd PluckArtifact.jl
 julia --project
@@ -57,7 +61,7 @@ julia> using PluckArtifact
 This should load without error.
 
 ## Checking that PluckArtifact-synthesis precompiles successfully
-From the root:
+From the root of the repo, run:
 ```
 cd PluckArtifact-synthesis
 julia --project
@@ -82,6 +86,13 @@ This should run within a few minutes. Check that it produces a graph at `pluck-a
 
 # Artifact Evaluation
 
+We recommend running
+```
+git pull
+git submodule update --init --recursive
+```
+To get the latest version of the repo and ReadMe for evaluation.
+
 ## Table 1
 
 This part of the artifact is evaluated in `pluck-artifact/PluckArtifact.jl`. From the root of the repository, run:
@@ -91,17 +102,7 @@ cd PluckArtifact.jl
 make table-1
 ```
 
-The table will print out. Some entries will be marked as "skipped". These were specifically not included in this run because they take particularly long to run. Others are marked as "timeout" because they are expected to result in a timeout (based on prior runs). You can manually run "skipped" and "timeout" entries of the table with:
-
-```
-make table-1-cell <strategy> <benchmark>
-```
-where strategy is one of: `ours`, `dice`, `lazy_enum`, or `eager_enum` and benchmark is the name of the row in the printed table.
-
-for example:
-```
-make table-1-cell eager_enum sorted_list
-```
+The results table will print out, which can be compared to Table 1.
 
 Differences from submission: we expect some differences from the original submission as during the review process we normalized for one aspect of our comparison to Dice.jl (related to variable ordering). This results in some benchmarks becoming stronger for us (e.g. `insurance`) and others becoming weaker for us (e.g. `alarm`).
 
