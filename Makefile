@@ -1,5 +1,23 @@
+# Docker configuration
+DOCKER_IMAGE_NAME = pluck-artifact
+DOCKER_TAG = latest
+DOCKER_PORT = 8000
+DOCKER_MEMORY = 60g
+
+# Repository URLs
+PLUCK_REPO = https://github.com/mlb2251/PluckArtifact.jl
+SYNTHESIS_REPO = https://github.com/alex-lew/coarse-to-fine-synthesis.git
+RSDD_REPO = https://github.com/alex-lew/rsdd.git
+
+# Branch names
+PLUCK_MAIN_BRANCH = main
+PLUCK_SYNTHESIS_BRANCH = synthesis
+PLUCK_MAIN_MADDY_BRANCH = main-maddy
+PLUCK_DOTS_BRANCH = dots
+RSDD_MAIN_BRANCH = main
+
 docker-start:
-	docker run -it -m 60g -p 8000:8000 -v $(PWD):/pluck-artifact pluck-artifact:latest
+	docker run -it -m $(DOCKER_MEMORY) -p $(DOCKER_PORT):$(DOCKER_PORT) -v $(PWD):/pluck-artifact $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
 
 setup: bindings julia-instantiate
 
@@ -12,10 +30,10 @@ julia-instantiate:
 	cd PluckArtifact-synthesis && make julia-instantiate
 
 docker-build:
-	docker build -t pluck-artifact:latest .
+	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
 
 docker-build-verbose:
-	docker build -t pluck-artifact:latest . --progress=plain
+	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) . --progress=plain
 
 submodule-status:
 	git submodule status
@@ -23,20 +41,19 @@ submodule-status:
 
 # useful for having them not lose their branches
 submodule-clone:
-	git clone https://github.com/mlb2251/PluckArtifact.jl -b main
-	git clone https://github.com/mlb2251/PluckArtifact.jl -b synthesis PluckArtifact-synthesis
-	git clone https://github.com/alex-lew/coarse-to-fine-synthesis.git -b main-maddy PluckArtifact.jl/Pluck.jl
-	git clone https://github.com/alex-lew/coarse-to-fine-synthesis.git -b dots PluckArtifact-synthesis/PluckSynthesis.jl
-	git clone https://github.com/alex-lew/coarse-to-fine-synthesis.git -b dots PluckArtifact-synthesis/PluckSynthesis.jl
-	git clone https://github.com/alex-lew/rsdd.git -b main PluckArtifact.jl/Pluck.jl/src/RSDD/rsdd
-	git clone https://github.com/alex-lew/rsdd.git -b main PluckArtifact-synthesis/PluckSynthesis.jl/src/RSDD/rsdd
+	git clone $(PLUCK_REPO) -b $(PLUCK_MAIN_BRANCH)
+	git clone $(PLUCK_REPO) -b $(PLUCK_SYNTHESIS_BRANCH) PluckArtifact-synthesis
+	git clone $(SYNTHESIS_REPO) -b $(PLUCK_MAIN_MADDY_BRANCH) PluckArtifact.jl/Pluck.jl
+	git clone $(SYNTHESIS_REPO) -b $(PLUCK_DOTS_BRANCH) PluckArtifact-synthesis/PluckSynthesis.jl
+	git clone $(RSDD_REPO) -b $(RSDD_MAIN_BRANCH) PluckArtifact.jl/Pluck.jl/src/RSDD/rsdd
+	git clone $(RSDD_REPO) -b $(RSDD_MAIN_BRANCH) PluckArtifact-synthesis/PluckSynthesis.jl/src/RSDD/rsdd
 
 submodule-checkout:
-	cd PluckArtifact.jl && git checkout main && git pull
-	cd PluckArtifact-synthesis && git checkout synthesis && git pull
-	cd PluckArtifact.jl/Pluck.jl && git checkout main-maddy && git pull
-	cd PluckArtifact-synthesis/PluckSynthesis.jl && git checkout dots && git pull
-	cd PluckArtifact.jl/Pluck.jl/src/RSDD/rsdd && git checkout main && git pull
-	cd PluckArtifact-synthesis/PluckSynthesis.jl/src/RSDD/rsdd && git checkout main && git pull
+	cd PluckArtifact.jl && git checkout $(PLUCK_MAIN_BRANCH) && git pull
+	cd PluckArtifact-synthesis && git checkout $(PLUCK_SYNTHESIS_BRANCH) && git pull
+	cd PluckArtifact.jl/Pluck.jl && git checkout $(PLUCK_MAIN_MADDY_BRANCH) && git pull
+	cd PluckArtifact-synthesis/PluckSynthesis.jl && git checkout $(PLUCK_DOTS_BRANCH) && git pull
+	cd PluckArtifact.jl/Pluck.jl/src/RSDD/rsdd && git checkout $(RSDD_MAIN_BRANCH) && git pull
+	cd PluckArtifact-synthesis/PluckSynthesis.jl/src/RSDD/rsdd && git checkout $(RSDD_MAIN_BRANCH) && git pull
 
 
