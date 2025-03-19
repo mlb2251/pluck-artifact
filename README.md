@@ -35,9 +35,9 @@ make docker-start
 ```
 or by running:
 ```
-	docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact pluck-artifact:latest
+docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact pluck-artifact:latest
 ```
-`-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in python3 HTTP server. The 60GB limit is unnecessary, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
+The flag `-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in python3 HTTP server. The 60GB limit is unnecessary, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
 
 **All commands after this point should be run within Docker unless otherwise specified**
 
@@ -82,6 +82,16 @@ make figure-4-diamond
 ```
 
 This should run within a few minutes. Check that it produces a graph at `pluck-artifact/PluckArtifact.jl/out/plots/diamond.png` (which should look similar to the first graph in Figure 4 of the paper).
+
+Finally, make sure that you can run
+
+```
+cd PluckArtifact-synthesis
+python3 -m http.server 8000
+```
+and navigating to http://localhost:8000/html/fuzzing.html?path=data/figure5/new_nov14.json shows a page including Figure 5 (left).
+
+This can be run either within or outside of the Docker container, since the Docker container is mounted to the local directory.
 
 
 # Artifact Evaluation
