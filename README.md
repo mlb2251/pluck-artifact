@@ -1,6 +1,86 @@
-This is the official artifact for reproducing the results of the paper "Stochastic Lazy Knowledge Compilation for Inference in Discrete Probabilistic Programs" (PLDI 2025 Submission #545).
+Thank you for taking the time to evaluate this artifact. This artifact is for reproducing the results of the paper "Stochastic Lazy Knowledge Compilation for Inference in Discrete Probabilistic Programs" (PLDI 2025 Submission #545).
 
 # Kick the tires
+
+## Basic setup
+
+If starting from the Zenodo zip file, you can download and unzip `pluck-artifact.zip` to make a new folder `pluck-artifact`. If starting from here, we recommend updating to any recent tweaks/improvements in the repo (including to the ReadMe):
+
+```
+cd pluck-artifact
+git pull
+git submodule update --init --recursive
+```
+
+Without using the zip file, you can also just clone `pluck-artifact` via:
+
+```
+git clone --recursive https://github.com/mlb2251/pluck-artifact.git
+```
+
+The artifact is set up to run in Docker - you can pull the docker container like so:
+
+```
+docker pull mlbowers/pluck-artifact:latest
+```
+
+
+From the root of the repo, launch the docker container with:
+```
+make docker-start
+```
+or by running:
+```
+	docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact pluck-artifact:latest
+```
+`-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in python3 HTTP server. The 60GB limit is unnecessary, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). The high-memory baselines can be avoided as needed.
+
+**All commands after this point should be run within Docker unless otherwise specified**
+
+## Setup
+
+Run the following command to make sure the Rust binaries are compiled, and that the Julia libraries are instantiated.
+```
+make setup
+```
+
+## Check that PluckArtifact.jl precompiles successfully
+From the root:
+```
+cd PluckArtifact.jl
+julia --project
+```
+This should drop you into a julia REPL where you can run:
+```
+julia> using PluckArtifact
+```
+This should load without error.
+
+## Checking that PluckArtifact-synthesis precompiles successfully
+From the root:
+```
+cd PluckArtifact-synthesis
+julia --project
+```
+This should drop you into a julia REPL where you can run:
+```
+julia> using PluckArtifact
+```
+This should load without error.
+
+
+## Basic test of Pluck and baselines
+As a quick test that likelihood evaluation works for us and the baselines, we'll run one of the simpler baselines:
+
+```
+cd PluckArtifact.jl
+make figure-4-diamond
+```
+
+This should run within a few minutes. Check that it produces a graph at `pluck-artifact/PluckArtifact.jl/out/plots/diamond.png` (which should look similar to the first graph in Figure 4 of the paper).
+
+
+# Artifact Evaluation
 
 ## Table 1
 
@@ -23,7 +103,7 @@ for example:
 make table-1-cell eager_enum sorted_list
 ```
 
-Differences from submission: we expect some differences from the original submission as during the review process we normalized one aspect of our comparison to Dice.jl (related to variable ordering). This results in some benchmarks improving for us (e.g. `insurance`) and others becoming weaker for us (e.g. `alarm`).
+Differences from submission: we expect some differences from the original submission as during the review process we normalized for one aspect of our comparison to Dice.jl (related to variable ordering). This results in some benchmarks becoming stronger for us (e.g. `insurance`) and others becoming weaker for us (e.g. `alarm`).
 
 However the claim made by the table remains the same as in the original submission. In particular, in the Bayesian Networks and Network Reachability subsections of the table we broadly expect Dice.jl to outperform us, though we occasionally do better, as discussed in submission lines 748-754:
 
@@ -75,6 +155,16 @@ And finally a subcommand to create the plot:
 make figure-5-left-show
 ```
 
+To view the generated plots, launch an HTTP server with python (either within Docker or outside of Docker – since the container is mounted in the local directory either will work):
+
+```
+cd PluckArtifact-synthesis
+python3 -m http.server 8000
+```
+
+Then view the result at: http://localhost:8000/html/fuzzing.html?path=data_to_plot/figure5-left/fuzzing_result.json
+
+
 ## Figure 5 (center, right)
 
 This part of the artifact is evaluated in `pluck-artifact/PluckArtifact-synthesis`. From the root of the repository, run:
@@ -90,14 +180,21 @@ make figure-5-right-bdd
 make figure-5-right-lazy
 make figure-5-right-smc
 ```
-And finally a subcommand to create the plot:
+And finally a subcommand to create the plot (which is already run by `make figure-5-right`):
 ```
 make figure-5-right-show
 ```
 
+To view the generated plots, launch an HTTP server with python (either within Docker or outside of Docker – since the container is mounted in the local directory either will work):
+
+```
+cd PluckArtifact-synthesis
+python3 -m http.server 8000
+```
+
+Then view the result at: http://localhost:8000/html/synthesis.html?path=data_to_plot/figure5-right/synthesis_result.json
+
+## Running on your own inputs
 
 
-
-## Usage guide & Running on your own inputs
-
-See USAGE.md
+We have an additional guide for running Pluck on your own inputs. See `PluckArtifact.jl/Pluck.jl/USAGE.md` for a guide.

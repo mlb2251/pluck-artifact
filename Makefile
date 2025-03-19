@@ -6,7 +6,7 @@ DOCKER_MEMORY = 60g
 
 # Repository URLs
 PLUCK_REPO = https://github.com/mlb2251/PluckArtifact.jl
-SYNTHESIS_REPO = https://github.com/alex-lew/coarse-to-fine-synthesis.git
+SYNTHESIS_REPO = https://github.com/mlb2251/PluckArtifactDependency.jl
 RSDD_REPO = https://github.com/alex-lew/rsdd.git
 
 # Branch names
