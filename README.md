@@ -131,7 +131,7 @@ make table-1-col COL=eager_enum
 
 make table-1-show
 ```
-The approximate time and memory usages will be: Ours (3 min, 3 GB), Dice.jl (9 min, 24 GB), Lazy Enumeration (2 min, 2 GB), Eager Enumeration (1 min, 2 GB). Results will be cached and reused if a command is run more than once, and the argument `CACHE=false` to avoid using this cache.
+The approximate time and memory usages will be: Ours (3 min, 3 GB), Dice.jl (9 min, 24 GB), Lazy Enumeration (2 min, 2 GB), Eager Enumeration (1 min, 2 GB). Results will be cached and reused if a command is run more than once; use the argument `CACHE=false` to avoid using this cache.
 
 
 If needed, a single cell of the table can be evaluated like so (row names can be seen in `make table-1-show`):
@@ -163,7 +163,7 @@ string_editing  timeout          65.29           34001.29   10.08
 sorted_list     timeout          18.33           24185.76   3.85    
 ```
 
-Differences from submission: we expect some differences from the original submission results, as during the review process we normalized for one aspect of our comparison to Dice.jl related to variable ordering. This results in some benchmarks becoming stronger for us (e.g. `insurance`) and others becoming weaker for us (e.g. `alarm`). We also find Docker makes some benchmarks take more or less time for different methods.
+Differences from submission: we expect some differences from the original submission results, as during the review process we normalized for another aspect of our comparison to Dice.jl (related to variable ordering). This results in some benchmarks improving for us (e.g. `insurance`) and others becoming weaker for us (e.g. `alarm`). We also find Docker makes some benchmarks take more or less time for different methods.
 
 However, the claim made by Table 1 remains unchanged from the original submission. In particular, in the Bayesian Networks and Network Reachability subsections of the table we broadly expect Dice.jl to outperform us, though we occasionally do better, as discussed in submission lines 748-754:
 
@@ -237,9 +237,7 @@ make figure-5-left-show
 ```
 The expected time and memory usages are: bdd (1 min, 5 GB), dice (1 min, 5 GB), lazy (1 min, 2 GB), smc (1 min, 4 GB). By default this will attempt to use 8 threads, but you can manually set the thread count with an argument like `THREADS=1` (but it will of course take longer to run).
 
-The run will be on 10x fewer programs and with a 3x smaller timeout than the paper figure, but this should still produce similar results, with our approaches significantly outperforming the baselines.
-
-The command `make figure-5-left LEFT_TRUNCATE=100 LEFT_TIMELIMIT=3.0` would recreate full run but takes significantly more time and memory without changing the main results.
+The run will be on 10x fewer programs and with a 3x smaller timeout than the paper figure, but this should still produce similar results, with our approaches significantly outperforming the baselines. The command `make figure-5-left LEFT_TRUNCATE=100 LEFT_TIMELIMIT=3.0` would recreate full submission run but takes significantly more time and memory without changing the main results.
 
 To view the generated plot, launch an HTTP server with Python 3, either within Docker or outside of Docker (since the container is mounted in the local directory either will work):
 
@@ -254,7 +252,7 @@ Which should look like:
 
 ![](expected_plots/expected_fig5left.png)
 
-Our approaches (green and orange lines) should be significantly ahead of the other lines.
+Our approaches (green and orange lines) should outperform (appear to the right of) the other baselines.
 
 ## Figure 5 (center & right)
 
@@ -289,11 +287,13 @@ Which should show both the Right and Center graphs of Figure 5. If viewing a lar
 
 ![](expected_plots/expected_fig5right.png)
 
-This low data run should look noisier than the paper figures, since it's on 12.5x less data and isn't averaging over multiple repetitions of each run.
+This low data run should look noisier than the paper figures, since it's on 12.5x less data and isn't averaging over multiple repetitions of each run. The "Within 10%" plot will still look quite smooth, and should generally show that Dice.jl doesn't perform as well as the other methods, taking longer to solve tasks (i.e. Dice.jl is above and to the left of the other methods on the graph). The Inverse Perplexity graph will be much noisier, but should still generally show that Dice.jl is below the other methods throughout the graph.
 
-A slightly larger run, `make figure-5-right RIGHT_TRUNCATE=20 RIGHT_STEPS=1000` looks like:
+A slightly larger run, `make figure-5-right RIGHT_TRUNCATE=20 RIGHT_STEPS=1000` took 1.5 hours and 13 GB of memory looks like:
 
 ![](expected_plots/expected_fig5right_20x1000.png)
+
+But this is still 5x less data and 3x fewer repetitions than the paper figures.
 
 ## Running on your own inputs
 
