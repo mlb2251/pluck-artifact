@@ -36,10 +36,10 @@ julia-instantiate:
 # DOCKER BUILD
 
 docker-build:
-	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
+	docker build -t pluck-artifact:$(DOCKER_TAG) .
 
 docker-build-verbose:
-	docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) . --progress=plain
+	docker build -t pluck-artifact:$(DOCKER_TAG) . --progress=plain
 
 # SUBMODULES (for development, not for artifact usage)
 
