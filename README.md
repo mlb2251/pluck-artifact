@@ -252,7 +252,7 @@ Which should look like:
 
 ![](expected_plots/expected_fig5left.png)
 
-Our approaches (green and orange lines) should outperform (appear to the right of) the other baselines.
+Our approaches (green and orange lines) should outperform the other baselines, successfully evaluating more programs in a given amount of time.
 
 ## Figure 5 (center & right)
 
@@ -273,7 +273,7 @@ make figure-5-right-show
 ```
 The expected time and memory usages are: bdd (5 min, 2 GB), dice (6 min, 7 GB), lazy (4 min, 2 GB), smc (5 min, 4 GB). By default this will attempt to use 8 threads, but you can manually set the thread count with an argument like `THREADS=1` (but it will of course take longer to run).
 
-Similar to Figure 4, this will run on a much smaller subset of the data which should be enough to validate the expected trends. Running on the full data would require the command `make figure-5-right RIGHT_TRUNCATE=100 RIGHT_STEPS=1000 RIGHT_REPETITIONS=3` which will run on 12.5x more programs, for 2x more MCMC steps, and with 3 repetitions of each run instead of 1. This takes significantly longer (20+ hours when using 8 threads) and more memory.
+Similar to Figure 4, this will run on a much smaller subset of the data which should be enough to validate the expected trends. Running on the full data would require the command `make figure-5-right RIGHT_TRUNCATE=100 RIGHT_STEPS=1000 RIGHT_REPETITIONS=3` which will run on 12.5x more programs, for 2x more MCMC steps, and with 3 repetitions of each run instead of 1. This takes significantly longer (16+ hours when using 8 threads) and more memory.
 
 Similar to the Figure 5 Left plot evaluation, you can launch a server to view the results:
 ```
