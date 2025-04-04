@@ -30,15 +30,17 @@ docker pull mlbowers/pluck-artifact:latest
 
 From the root of the repo, launch the docker container with:
 ```
-make docker-start
-```
-or by running:
-```
 docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact mlbowers/pluck-artifact:latest
 ```
-The flag `-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in Python 3 HTTP server. This is optional if you have Python 3 installed outside of Docker as well, as you can simply run that version. The 60GB limit is unnecessarily large, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
+On some systems, including a default Linux installation, special permissions are required to launch a docker container, in which case this command must be run with `sudo`. Alternatively,  you can [configure non-sudo access to Docker](https://docs.docker.com/engine/install/linux-postinstall/).
 
-**All commands after this point should be run within Docker unless otherwise specified. Docker should be run from the root of the repository.**
+The `docker run` command above will launch the docker container with:
+- an interactive terminal (`-it`)
+- A 60GB memory limit (`-m 60g`). This is unnecessarily large, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
+- port 8000 in the container forwarded to port 8000 in the host (`-p 8000:8000`). This is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in Python 3 HTTP server. This is optional if you have Python 3 installed outside of Docker as well, as you can simply run that version. The particular port bound is not important – you can just replace the port used in future instructions with the one you used here.
+- mount the the current directory (`$(pwd)` on Linux and Mac, `${PWD}` on Windows) to correspond to the path `/pluck-artifact` in the container (`$(pwd):/pluck-artifact`)
+
+**All commands after this point should be run within Docker unless otherwise specified. Docker should always be started from the root of the repository.**
 
 ## Compilation
 
