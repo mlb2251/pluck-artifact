@@ -38,7 +38,7 @@ docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact mlbowers/pluck-arti
 ```
 The flag `-p 8000:8000` is only relevant to Figure 5, as the graphs there are generated as HTML/JS pages which need to be served to `localhost:8000` on the built-in Python 3 HTTP server. This is optional if you have Python 3 installed outside of Docker as well, as you can simply run that version. The 60GB limit is unnecessarily large, though we did notice some baselines we compare to within the docker container can reach up to 40GB (despite taking less on our machine outside of the container). However these high-memory baselines can be avoided as needed.
 
-**All commands after this point should be run within Docker unless otherwise specified**
+**All commands after this point should be run within Docker unless otherwise specified. Docker should be run from the root of the repository.**
 
 ## Compilation
 
@@ -98,12 +98,13 @@ and that navigating to http://localhost:8000/html/fuzzing.html?path=data/figure5
 
 # Artifact Evaluation (Step-by-Step Instructions)
 
-We recommend running
+_Outside of Docker_ we recommend running
 ```
 git pull
 git submodule update --init --recursive
 ```
 To get the latest version of the repo and `ReadMe.md` for evaluation.
+All evaluation commands should be run within Docker, and docker should be launched in the root of the repository (`pluck-artifact/`) with the command given earlier.
 
 ## Claims to verify
 
