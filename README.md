@@ -298,6 +298,7 @@ A slightly larger run, `make figure-5-right RIGHT_TRUNCATE=20 RIGHT_STEPS=1000` 
 
 But this is still 5x less data and 3x fewer repetitions than the paper figures.
 
-## Running on your own inputs
+## Additional Guides
 
-We have an additional guide for running Pluck on your own inputs, located at `PluckArtifact.jl/Pluck.jl/USAGE.md`.
+- There is a language reference and tutorial for writing Pluck programs located at `PluckArtifact.jl/Pluck.jl/USAGE.md`.
+- There is a guide for developers looking to extend the functionality of Pluck located at `PluckArtifact.jl/Pluck.jl/DEV.md`
