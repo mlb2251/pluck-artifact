@@ -1,4 +1,10 @@
-Thank you for taking the time to evaluate this artifact. This artifact is for reproducing the results of the paper "Stochastic Lazy Knowledge Compilation for Inference in Discrete Probabilistic Programs" (PLDI 2025 Submission #545).
+This artifact is for reproducing the results of the paper "Stochastic Lazy Knowledge Compilation for Inference in Discrete Probabilistic Programs" (Bowers & Lew, et al. PLDI 2025).
+
+This repo is for reproducing the results presented in the paper. To instead work with the latest version of Pluck (post publication), see the [Pluck.jl](https://github.com/mlb2251/Pluck.jl) repo, which includes improvements to the usability of Pluck as we improve it as a library and codebase post-publication. However for simply reproducing the paper results, the `pluck-artifact` repo is sufficient.
+
+In addition to the following guide for reproducing results from the paper, we have written two additional guides:
+- There is a language reference and **tutorial** for writing Pluck programs located at `PluckArtifact.jl/Pluck.jl/USAGE.md`.
+- There is a guide for developers looking to extend the functionality of Pluck located at `PluckArtifact.jl/Pluck.jl/DEV.md`
 
 # Kicking the tires (Getting Started Guide)
 
@@ -12,7 +18,7 @@ git clone --recursive https://github.com/mlb2251/pluck-artifact.git
 
 ### From Zenodo
 
-Download and unzip `pluck-artifact.zip` to make a new folder `pluck-artifact`. We recommend updating to get any recent tweaks/improvements in the repo (including to `README.md`):
+From [the artifact Zenodo](https://doi.org/10.5281/zenodo.15048551) download and unzip `pluck-artifact.zip` to make a new folder `pluck-artifact`. We recommend updating from git to get any recent tweaks/improvements in the repo (including to `README.md`):
 
 ```
 cd pluck-artifact
@@ -32,7 +38,7 @@ From the root of the repo, launch the docker container with:
 ```
 docker run -it -m 60g -p 8000:8000 -v $(pwd):/pluck-artifact mlbowers/pluck-artifact:latest
 ```
-On some platforms like a default Linux installation, special permissions are required to launch a docker container, in which case this command must be run with `sudo`. Alternatively,  you can [configure non-sudo access to Docker](https://docs.docker.com/engine/install/linux-postinstall/).
+On some platforms, including a default Linux installation, special permissions are required to launch a docker container, in which case this command must be run with `sudo`. Alternatively,  you can [configure non-sudo access to Docker](https://docs.docker.com/engine/install/linux-postinstall/).
 
 The `docker run` command above will launch the docker container with:
 - an interactive terminal (`-it`)
