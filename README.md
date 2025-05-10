@@ -150,31 +150,7 @@ make table-1-cell COL=ours ROW=noisy_or
 
 ### Verifying Table 1 Results
 
-Running the above commands will print out a table that can be compared to Table 1 in the paper. Here is the final table we get when running in Docker:
-
-```
-Benchmark       Eager Enum (ms)  Lazy Enum (ms)  Dice (ms)  Ours (ms)
----------------------------------------------------------------------
-noisy_or        3.83             0.63            0.43       0.21     
-burglary        0.19             0.08            0.46       0.14     
-cancer          0.25             0.12            0.57       0.18     
-survey          0.80             1.14            0.73       0.40     
-water           timeout          551.62          19.88      7.05     
-alarm           timeout          timeout         134.95     1066.26  
-insurance       timeout          timeout         272.93     2875.26  
-hepar2          timeout          timeout         10.71      80.06    
-pigs            timeout          timeout         10.40      9.62     
-diamond         timeout          timeout         3.59       11.34    
-ladder          timeout          timeout         12.16      73.06    
-hmm             timeout          timeout         2.35       16.80    
-pcfg            timeout          5.69            7824.30    8.56     
-string_editing  timeout          65.29           34001.29   10.08    
-sorted_list     timeout          18.33           24185.76   3.85    
-```
-
-Differences from submission: we expect some differences from the original submission results, as during the review process we normalized for another aspect of our comparison to Dice.jl (related to variable ordering). This results in some benchmarks improving for us (e.g. `insurance`) and others becoming weaker for us (e.g. `alarm`). We also find Docker makes some benchmarks take more or less time for different methods.
-
-However, the claim made by Table 1 remains unchanged from the original submission. In particular, in the Bayesian Networks and Network Reachability subsections of the table we broadly expect Dice.jl to outperform us, though we occasionally do better, as discussed in submission lines 748-754:
+Running the above commands will print out a table that can be compared to Table 1 in the paper. We find Docker makes some benchmarks take more or less time for different methods. In the Bayesian Networks and Network Reachability subsections of the table we broadly expect Dice.jl to outperform us, though we occasionally do better, as discussed in the submission:
 
 > The benchmarks from Dice’s repository are not defined over compound data and do not exercise many of lazy knowledge compilation’s strengths. In general, on such tasks we expect lazy knowledge compilation to perform slightly worse than eager knowledge compilation, as our algorithm adds several sources of constant-factor overhead...
 
@@ -189,7 +165,9 @@ make table-1-timeout-lazy
 make table-1-timeout-eager
 ```
 The lazy command will take around 11 minutes and 17 GB to run, while the eager command will take around 13 minutes and 3 GB to run. Any issues will be indicated by a line printed in red beginning with
-`[unexpected] didn't hit time limit`. 
+`[unexpected] didn't hit time limit`.
+
+Finally, the benchmark `munin` for Dice takes particularly long to run so it is skipped in this table and can be run manually with `make table-1-cell COL=dice ROW=munin`
 
 ## Figure 4
 
