@@ -11,12 +11,13 @@ cd PluckArtifact.jl
 make table1-clean
 ```
 
-Testing a branch `feature`:
+Testing a branch `feature` (or commit with `set-commit COMMIT=...`):
 ```
 make set-branch BRANCH=feature
 make evaluate
 make table-1-save 
 ```
+
 
 clear out/table1
 ```
