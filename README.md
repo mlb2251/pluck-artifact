@@ -1,3 +1,58 @@
+**Note** This branch (`latest`) is for testing the latest version of Pluck, it differs from the main branch which reproduces the artifact at the time of publication (`main` still includes post-revision improvements).
+
+At the top of this file is a guide to testing Pluck.jl quickly when making changes that might be pushed. Some changes might cause the original full artifact to no longer work, so see the `main` branch for the original artifact. This branch is focused on just recreating Table 1 from the paper, as this is sufficient to evaluate the performance (high points on the scaling graph are already included in table 1 anyways, and synthesis uses a different repository) to just check table-1, since the scaling plots correspond to high points on this graph.
+
+Setup:
+```
+git clone --recursive https://github.com/mlb2251/pluck-artifact.git
+git checkout latest
+git pull && git submodule update
+cd PluckArtifact.jl
+make table1-clean
+```
+
+Testing a branch `feature`:
+```
+make set-branch BRANCH=feature
+make evaluate
+make table-1-save 
+```
+
+clear out/table1
+```
+make table1-clean
+```
+
+Checking just lazy knowledge compilation without lazy/strict enumeration or dice, and comparing it first against historical results. *Ensure that you are plugged into a charger*.
+```
+make evaluate
+```
+
+If you made changes that affect *lazy enumeration*, run:
+```
+make evaluate COL=lazy_enum
+make table-1-timeout-lazy
+```
+
+If you made changes that affect *strict enumeration*, run:
+```
+make evaluate COL=eager
+table-1-timeout-eager
+```
+
+If you made changes that affect *dice*, run:
+```
+make evaluate COL=dice
+```
+
+
+
+
+
+
+
+# Artifact
+
 This artifact is for reproducing the results of the paper "Stochastic Lazy Knowledge Compilation for Inference in Discrete Probabilistic Programs" (Bowers & Lew, et al. PLDI 2025).
 
 This repo is for reproducing the results presented in the paper. To instead work with the latest version of Pluck (post publication), see the [Pluck.jl](https://github.com/mlb2251/Pluck.jl) repo, which includes improvements to the usability of Pluck as we improve it as a library and codebase post-publication. However for simply reproducing the paper results, the `pluck-artifact` repo is sufficient.
