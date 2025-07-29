@@ -2,6 +2,8 @@ This artifact is for reproducing the results of the paper "Stochastic Lazy Knowl
 
 This repo is for reproducing the results presented in the paper. To instead work with the latest version of Pluck (post publication), see the [Pluck.jl](https://github.com/mlb2251/Pluck.jl) repo, which includes improvements to the usability of Pluck as we improve it as a library and codebase post-publication. However for simply reproducing the paper results, the `pluck-artifact` repo is sufficient.
 
+While the `main` branch of this repo will remain as the artifact at the time of publication, you can use the `latest` branch of this repo for running more recent versions of Pluck.
+
 In addition to the following guide for reproducing results from the paper, we have written two additional guides:
 - There is a language reference and **tutorial** for writing Pluck programs located at `PluckArtifact.jl/Pluck.jl/USAGE.md`.
 - There is a guide for developers looking to extend the functionality of Pluck located at `PluckArtifact.jl/Pluck.jl/DEV.md`
